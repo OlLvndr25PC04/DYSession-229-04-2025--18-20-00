@@ -44,9 +44,9 @@ let state = {
 }
 
 
-// start = 0, end = j.length
-// state.downloadVAIC = false
-// state.json = true
+start = 0, end = j.length
+state.downloadVAIC = false
+state.json = true
 
 
 console.log(j.length, j.length / inc, N + 1, end)
@@ -162,7 +162,7 @@ async function main() {
 
 }
 
-main()
+// main()
 
 async function getFnJson() {
     state.downloadVAIC = false
@@ -181,4 +181,4 @@ async function getFnJson() {
 
 }
 
-// getFnJson()
+getFnJson()
