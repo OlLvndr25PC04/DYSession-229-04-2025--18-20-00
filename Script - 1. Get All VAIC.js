@@ -27,9 +27,9 @@ let totalDuration = j.reduce((acc, j) => {
 
 let totalN = Math.ceil(j.length / 50)
 
-let N = 5, inc = 50
+let N = 6, inc = 50
 let start = N * inc, end = (N + 1) * inc
-start = 253, end = 255
+
 
 let isLast = N == totalN - 1
 let is2ndLast = N == totalN - 2
@@ -69,42 +69,58 @@ let J = j.slice(start, end).map((j, i) => {
             let videoURL = j?.video?.play_addr?.url_list[1]
             // console.log(aweme_id, videoURL)
 
-            setTimeout(() => {
-                let cond = j?.video?.play_addr?.url_list.length == 3
-                let videoFilename
-                if (cond) {
-                    videoFilename = `Videos/` + aweme_id + '.mp4'
 
+            let cond = j?.video?.play_addr?.url_list.length == 3
+            let videoFilename
+            if (cond) {
+                videoFilename = `Videos/` + aweme_id + '.mp4'
+
+                setTimeout(() => {
                     download_url_to_file(videoURL, videoFilename, i, 'Video', r)
-                }
+                }, state.json ? 0 : 3000 * i);
 
-                let videoCoverURL = j.video?.cover?.url_list[0]
-                let coverFilename = 'Covers/' + aweme_id + '.png'
+
+            }
+
+            let videoCoverURL = j.video?.cover?.url_list[0]
+            let coverFilename = 'Covers/' + aweme_id + '.png'
+            setTimeout(() => {
                 download_url_to_file(videoCoverURL, coverFilename, i, 'Cover')
-
-                let musicURL = j.music?.play_url.uri
-                // console.log(i, musicURL)
-                let musicFilename = 'Audios/' + aweme_id + `.mp3`
-                !!musicURL && download_url_to_file(musicURL, musicFilename, i, 'Audio')
-
-                let images = j.images
-                let imagesFilenames
-                if (images) {
-                    imagesFilenames = images.map((img, _i) => {
-                        let imgURL = img.url_list[0]
-                        if (!fs.existsSync('Images/' + aweme_id)) fs.mkdirSync('Images/' + aweme_id)
-                        download_url_to_file(imgURL, 'Images/' + aweme_id + `/${_i}.png`, i, 'Image', r)
-                        let imageFilename = 'Images/' + aweme_id + `/${_i}.png`
-
-                        return imageFilename
-                    })
-                }
-
-                let fnObj = { aweme_id, duration, videoFilename, musicFilename, imagesFilenames, coverFilename }
-                // console.log(i + 1, fnObj)
-                allFnObjs.push(fnObj)
-                state.json && r()
             }, state.json ? 0 : 3000 * i);
+
+
+
+            let musicURL = j.music?.play_url.uri
+            // console.log(i, musicURL)
+            let musicFilename = 'Audios/' + aweme_id + `.mp3`
+            setTimeout(() => {
+                !!musicURL && download_url_to_file(musicURL, musicFilename, i, 'Audio')
+            }, state.json ? 0 : 3000 * i);
+
+
+
+            let images = j.images
+            let imagesFilenames
+            if (images) {
+                imagesFilenames = images.map((img, _i) => {
+                    let imgURL = img.url_list[0]
+                    if (!fs.existsSync('Images/' + aweme_id)) fs.mkdirSync('Images/' + aweme_id)
+                    setTimeout(() => {
+                        download_url_to_file(imgURL, 'Images/' + aweme_id + `/${_i}.png`, i, 'Image', r)
+                    }, state.json ? 0 : 3000 * i);
+
+
+                    let imageFilename = 'Images/' + aweme_id + `/${_i}.png`
+
+                    return imageFilename
+                })
+            }
+
+            let fnObj = { aweme_id, duration, videoFilename, musicFilename, imagesFilenames, coverFilename }
+            // console.log(i + 1, fnObj)
+            allFnObjs.push(fnObj)
+            state.json && r()
+
 
         })
 
@@ -173,7 +189,7 @@ async function getFnJson() {
     await Promise.all(J)
 
     console.log('b')
-    
+
     fs.writeFileSync('All V,A,I,C Objs.json', JSON.stringify(allFnObjs, null, 1))
 
     state.downloadVAIC = true
