@@ -1,7 +1,7 @@
 import splitFile from 'split-file'
 import fs from 'fs'
 
-let totalSize = 0
+let totalSize = 0, totalLSize = 0
 
 let ori_gitignore = fs.readFileSync('.gitignore').toString().split('\n')
 
@@ -24,6 +24,7 @@ function processDir(dir = './') {
 
       if(ori_gitignore.includes(f.name.replaceAll(/[\[\]\(\)\!]/g, function (s) { return '\\' + s }))) return
       if (f.stat.size > 90000000) {
+        totalLSize += f.stat.size
         console.log(f.name)
         splitFile.splitFileBySize(f.path, 90000000)
           .then((names) => {
@@ -51,4 +52,4 @@ function processDir(dir = './') {
 let allFiles = [], allFolders = []
 processDir()
 
-console.log(totalSize)
+console.log(totalSize, totalLSize)

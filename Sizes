@@ -1,5 +1,5 @@
 1 - 50          1783078196  1783078196  3       3       786633863
-51 - 100        0           0           0       0       0
+51 - 100        2141146188  3924224384  5       8       1242379836
 101 - 150       0           0           0       0       0
 150 - 200       0           0           0       0       0
 201 - 250       0           0           0       0       0
@@ -7,4 +7,4 @@
 351 - 370       0           0           0       0       0
 301 - 350       0           0           0       0       0
 
-git add . && git commit --quiet -m "Adding VAIC -> 1 - 50 of 370, I:" -m "{ThisSize:1783078196,TotalSize:1783078196,ThisLF:3,TotalLF:3,ThisLSize:786633863}" && git push origin main
+git add . && git commit --quiet -m "Adding VAIC -> 51 - 100 of 370, I:" -m "{ThisSize:2141146188,TotalSize:3924224384,ThisLF:5,TotalLF:6,ThisLSize:1242379836}" && git push origin main
