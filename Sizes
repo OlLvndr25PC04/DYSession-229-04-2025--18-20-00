@@ -6,6 +6,6 @@
 251 - 300       1085954876  8019118359  1       11      479201181
 _ removed Videos dir due to size too large
 301 - 350       _           _           3       14      653614374
-351 - 370       0           0           0       0       0
+351 - 370       _           _           2       16      220288347
  
-git add . && git commit --quiet -m "Adding VAIC -> 301 - 350 of 370, I:" && git push origin main
+git add . && git commit --quiet -m "Adding VAIC -> 351 - 370 of 370, I:" && git push origin main
